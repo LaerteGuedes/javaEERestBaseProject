@@ -9,7 +9,7 @@
 
     <servlet-mapping>
         <servlet-name>resteasy-servlet</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
     <!-- Auto scan REST service -->
@@ -21,7 +21,7 @@
     <!-- this should be the same URL pattern as the servlet-mapping property -->
     <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>
-        <param-value>/rest</param-value>
+        <param-value>/</param-value>
     </context-param>
 
     <listener>

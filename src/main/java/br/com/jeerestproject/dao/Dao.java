@@ -9,7 +9,6 @@ import java.util.List;
  */
 public interface Dao<T extends AbstractEntity>{
 
-
     void add(T t);
 
     void update(T t);

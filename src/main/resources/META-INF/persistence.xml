@@ -11,6 +11,8 @@
 		<jta-data-source>java:jboss/datasources/jeeRest</jta-data-source>
 
 		<class>br.com.jeerestproject.domain.Employee</class>
+		<class>br.com.jeerestproject.domain.User</class>
+
 
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />

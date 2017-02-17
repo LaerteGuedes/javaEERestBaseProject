@@ -13,7 +13,7 @@ public class HelloRestController {
     @GET
     @Path("/helloworld")
     public Response home(){
-        return Response.status(200).entity("Hello world!").build();
+        return Response.status(200).entity("Hello world 2!").build();
     }
 
 }
