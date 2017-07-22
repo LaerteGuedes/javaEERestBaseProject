@@ -5,7 +5,10 @@ import br.com.jeerestproject.domain.User;
 import br.com.jeerestproject.service.BaseService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -15,40 +18,39 @@ public abstract class BaseController<T extends AbstractEntity> {
 
     public abstract BaseService<T> getService();
 
+    public abstract UriInfo getUriInfo();
+
     @GET
     @Path("/")
-    @Produces("application/json")
-    public List<T> list(){
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<T> show(){
         return getService().findAll();
     }
 
     @GET
     @Path("/{id}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") long id){
         T t = getService().findById(id);
-
-        if (t == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
 
         return Response.status(Response.Status.OK).entity(t).build();
     }
 
     @POST
     @Path("/")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response add(T t){
         getService().add(t);
 
-        return Response.status(Response.Status.CREATED).build();
+        return Response.created(getUriPath(t.getId())).build();
     }
 
     @PUT
     @Path("/")
-    @Produces
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response update(T t){
         if (t.getId() == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
 
         getService().update(t);
 
@@ -57,7 +59,6 @@ public abstract class BaseController<T extends AbstractEntity> {
 
     @DELETE
     @Path("/{id}")
-    @Produces
     public Response delete(@PathParam("id") long id){
         T t = getService().findById(id);
 
@@ -67,6 +68,10 @@ public abstract class BaseController<T extends AbstractEntity> {
         getService().remove(t);
 
         return Response.status(Response.Status.OK).build();
+    }
+
+    private URI getUriPath(Long id){
+        return getUriInfo().getAbsolutePathBuilder().path(id.toString()).build();
     }
 
 }

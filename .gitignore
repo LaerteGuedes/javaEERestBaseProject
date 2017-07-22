@@ -7,7 +7,7 @@
 *.jar
 *.war
 *.ear
-.idea/
+.idea/*
 .idea/artifacts
 lib/
 target/*
